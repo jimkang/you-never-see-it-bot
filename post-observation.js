@@ -4,6 +4,7 @@ var getWordEntry = require('./get-word-entry');
 var fs = require('fs');
 var probable = require('probable');
 var oknok = require('oknok');
+var makeObservation = require('./make-observation');
 
 var dryRun = false;
 if (process.argv.length > 2) {
@@ -20,8 +21,8 @@ getWordEntry(
   oknok({ ok: useWord, nok: wrapUp })
 );
 
-function useWord({ word, root, suffix }) {
-  var text = word;
+function useWord(wordEntry) {
+  var text = makeObservation({ probable, wordEntry });
   if (dryRun) {
     console.log('Would have posted:', text);
   } else {
