@@ -1,0 +1,29 @@
+{
+  "name": "you-never-see-it-bot",
+  "version": "1.0.0",
+  "description": "Makes observations about words.",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jimkang/you-never-see-it-bot.git"
+  },
+  "keywords": [],
+  "author": "Jim Kang",
+  "bugs": {
+    "url": "https://github.com/jimkang/you-never-see-it-bot/issues"
+  },
+  "homepage": "https://github.com/jimkang/you-never-see-it-bot",
+  "devDependencies": {},
+  "dependencies": {
+    "async": "^0.9.0",
+    "call-next-tick": "^1.1.2",
+    "eslint": "^7.15.0",
+    "get-file-line-offsets-in-json": "^1.0.2",
+    "jsonfile": "^2.2.3",
+    "line-chomper": "^0.5.0",
+    "split": "^1.0.1"
+  }
+}
