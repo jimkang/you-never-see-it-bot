@@ -3,7 +3,11 @@ var preEConsonants = ['z', 't', 'v', 's', 'c', 'k', 'r'];
 
 var formattersForSuffixes = {
   ing: [
-    (w, r) => `They call it "${w}", but you never see anyone ${formatRoot(r)}!`
+    (w, r) => `They call it "${w}", but you never see anyone ${formatRoot(r)}!`,
+    (w, r) =>
+      `I keep hearing about "${w}", but I have no idea how it works. Someone, teach me how to ${formatRoot(
+        r
+      )}!`
   ]
 };
 
