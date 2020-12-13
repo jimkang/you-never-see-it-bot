@@ -3,7 +3,7 @@
 var split = require('split');
 
 //var goodSuffixes = ['ing', 'er', 'ers', 'ion', 'ist', 'able'];
-var goodSuffixes = ['ing'];
+var goodSuffixes = ['ing', 'er', 'ers'];
 
 var recentlyProcessed = LimitQueue({ limit: 200 });
 

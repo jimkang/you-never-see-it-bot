@@ -3,18 +3,20 @@ var preEConsonants = ['z', 't', 'v', 's', 'c', 'k', 'r'];
 
 var formattersForSuffixes = {
   ing: [
-    (w, r) => `They call it "${w}", but you never see anyone ${formatRoot(r)}!`,
+    (w, r) => `They call it "${w}", but you never see anyone ${r}!`,
     (w, r) =>
       `I keep hearing about "${w}", but I have no idea how it works. Someone, teach me how to ${formatRoot(
         r
       )}!`
-  ]
+  ],
+  er: [(w, r) => `They call it a "${w}", but I've never seen one ${r}.`],
+  ers: [(w, r) => `They call 'em "${w}", but I've never see 'em ${r}.`]
 };
 
 function makeObservation({ probable, wordEntry }) {
   var formatters = formattersForSuffixes[wordEntry.suffix];
   var formatter = probable.pick(formatters);
-  return formatter(wordEntry.word, wordEntry.root);
+  return formatter(wordEntry.word, formatRoot(wordEntry.root));
 }
 
 function formatRoot(root) {
