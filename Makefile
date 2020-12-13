@@ -25,3 +25,7 @@ template-offsets:
 
 build-word-json:
 	cat data/words.txt | node tools/copy-words-with-interesting-suffixes.js > data/usable-words.ndjson
+
+update-base-words:
+	#wget http://svn.code.sf.net/p/cmusphinx/code/trunk/cmudict/cmudict-0.7b -O data/cmudict.txt
+	cat data/cmudict.txt | node tools/filter-words.js > data/words.txt

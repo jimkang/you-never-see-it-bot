@@ -23,6 +23,7 @@
     "call-next-tick": "^1.1.2",
     "eslint": "^7.15.0",
     "get-file-line-offsets-in-json": "^1.0.2",
+    "iscool": "^2.0.1",
     "jsonfile": "^2.2.3",
     "line-chomper": "^0.5.0",
     "minimist": "^1.2.5",
