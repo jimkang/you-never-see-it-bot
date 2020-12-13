@@ -10,7 +10,11 @@ var formattersForSuffixes = {
       )}!`
   ],
   er: [(w, r) => `They call it a "${w}", but I've never seen one ${r}.`],
-  ers: [(w, r) => `They call 'em "${w}", but I've never see 'em ${r}.`]
+  ers: [(w, r) => `They call 'em "${w}", but I've never see 'em ${r}.`],
+  ist: [
+    (w, r) => `Did you see that ${w}? It really knows how to play a ${r}!`,
+    (w, r) => `Ever talk to a ${w}? They're always thinking in terms of ${r}!`
+  ]
 };
 
 function makeObservation({ probable, wordEntry }) {
