@@ -7,6 +7,10 @@ var seedrandom = require('seedrandom');
 var oknok = require('oknok');
 var makeObservation = require('./make-observation');
 var minimist = require('minimist');
+var postIt = require('@jimkang/post-it');
+var config = require('./config');
+const iconURL =
+  'https://smidgeo.com/bots/you-never-see-it-bot/media/you-never-see-it-128.png';
 
 var { dry, seed } = minimist(process.argv.slice(2));
 
@@ -31,9 +35,25 @@ function useWord(wordEntry) {
   var text = makeObservation({ probable, wordEntry });
   if (dry) {
     console.log('Would have posted:', text);
-  } else {
-    console.log(text);
+    return;
   }
+
+  const id = `observation-${seed.replace(/ /g, '-')}`;
+
+  postIt(
+    {
+      id,
+      text: `<img src="${iconURL}" alt="Picture of bot" />${text}`,
+      altText: text,
+      targets: [
+        {
+          type: 'noteTaker',
+          config: config.noteTaker
+        }
+      ]
+    },
+    wrapUp
+  );
 }
 
 function wrapUp(error) {
