@@ -2,14 +2,20 @@
 
 var getWordEntry = require('./get-word-entry');
 var fs = require('fs');
-var probable = require('probable');
+var Probable = require('probable').createProbable;
+var seedrandom = require('seedrandom');
 var oknok = require('oknok');
 var makeObservation = require('./make-observation');
+var minimist = require('minimist');
 
-var dryRun = false;
-if (process.argv.length > 2) {
-  dryRun = process.argv[2].toLowerCase() == '--dry';
+var { dry, seed } = minimist(process.argv.slice(2));
+
+if (!seed) {
+  seed = new Date().toISOString();
 }
+console.log('seed:', seed);
+
+var probable = Probable({ random: seedrandom(seed) });
 
 const usableWordsCount = +fs.readFileSync(
   __dirname + '/data/usable-words-count.txt',
@@ -23,7 +29,7 @@ getWordEntry(
 
 function useWord(wordEntry) {
   var text = makeObservation({ probable, wordEntry });
-  if (dryRun) {
+  if (dry) {
     console.log('Would have posted:', text);
   } else {
     console.log(text);

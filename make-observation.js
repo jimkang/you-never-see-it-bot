@@ -1,4 +1,5 @@
-var needsAnE = ['z', 't', 'v'];
+var vowels = ['a', 'e', 'i', 'o', 'u'];
+var preEConsonants = ['z', 't', 'v', 's', 'c', 'k', 'r'];
 
 var formattersForSuffixes = {
   ing: [
@@ -19,15 +20,24 @@ function formatRoot(root) {
     return formatted;
   }
 
+  if (needsAnE(formatted)) {
+    formatted += 'e';
+  }
+
   if (root.charAt(root.length - 1) === root.charAt(root.length - 2)) {
     formatted = root.slice(0, -1);
   }
 
-  if (needsAnE.includes(formatted.charAt(root.length - 1))) {
-    formatted += 'e';
-  }
-
   return formatted;
+}
+
+function needsAnE(s) {
+  if (preEConsonants.includes(s.charAt(s.length - 1))) {
+    if (vowels.includes(s.charAt(s.length - 2))) {
+      return true;
+    }
+  }
+  return false;
 }
 
 module.exports = makeObservation;
