@@ -8,11 +8,16 @@ var goodSuffixes = ['ing', 'er', 'ers', 'ist'];
 var recentlyProcessed = LimitQueue({ limit: 200 });
 
 var lineStream = split();
-lineStream.on('data', echoIfGood);
+lineStream.on('data', considerLine);
 process.stdin.pipe(lineStream);
 
-function echoIfGood(s) {
+function considerLine(s) {
   var normalized = s.toLowerCase();
+  echoIfGood(normalized);
+  recentlyProcessed.add(normalized);
+}
+
+function echoIfGood(normalized) {
   var suffix;
   for (var i = 0; i < goodSuffixes.length; ++i) {
     const goodSuffix = goodSuffixes[i];
@@ -21,23 +26,36 @@ function echoIfGood(s) {
       break;
     }
   }
-  if (suffix) {
-    const root = normalized.slice(0, -suffix.length);
-    const truncRoot = root.slice(0, -1);
 
+  if (!suffix) {
+    return;
+  }
+
+  const root = normalized.slice(0, -suffix.length);
+
+  if (
+    recentlyProcessed.contents().includes(root) ||
+    recentlyProcessed.contents().includes(root + 'e')
+  ) {
+    return;
+  }
+
+  const lastTwoLettersInRootAreTheSame =
+    root.charAt(root.length - 2) === root.charAt(root.length - 1);
+
+  if (lastTwoLettersInRootAreTheSame) {
+    const truncRoot = root.slice(0, -1);
     if (
-      !recentlyProcessed.contents().includes(root) &&
-      !recentlyProcessed.contents().includes(root + 'e') &&
-      !recentlyProcessed.contents().includes(truncRoot) &&
-      !recentlyProcessed.contents().includes(truncRoot + 'e')
+      recentlyProcessed.contents().includes(truncRoot) ||
+      recentlyProcessed.contents().includes(truncRoot + 'e')
     ) {
-      process.stdout.write(
-        `{ "word": "${normalized}", "root": "${root}", "suffix": "${suffix}"}\n`
-      );
+      return;
     }
   }
 
-  recentlyProcessed.add(normalized);
+  process.stdout.write(
+    `{ "word": "${normalized}", "root": "${root}", "suffix": "${suffix}"}\n`
+  );
 }
 
 function LimitQueue({ limit }) {
