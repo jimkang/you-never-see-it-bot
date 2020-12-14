@@ -2,6 +2,8 @@
 
 var split = require('split');
 
+var iscool = require('iscool')();
+
 var startsWithAlpha = /^\w/;
 var hasNonAlpha = /[^\w]|\d/;
 
@@ -20,5 +22,9 @@ function echoIfGood(s) {
   }
 
   const normalized = word.toLowerCase();
-  process.stdout.write(normalized + '\n');
+  if (iscool(normalized)) {
+    process.stdout.write(normalized + '\n');
+  } else {
+    console.error('Found uncool word:', normalized);
+  }
 }
