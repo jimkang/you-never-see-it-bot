@@ -7,7 +7,9 @@ var goodSuffixes = ['ing', 'er', 'ers', 'ist'];
 
 var recentlyProcessed = LimitQueue({ limit: 200 });
 
-process.stdin.pipe(split()).on('data', echoIfGood);
+var lineStream = split();
+lineStream.on('data', echoIfGood);
+process.stdin.pipe(lineStream);
 
 function echoIfGood(s) {
   var normalized = s.toLowerCase();

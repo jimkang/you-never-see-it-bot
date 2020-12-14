@@ -1,12 +1,13 @@
 /* global process */
 
 var split = require('split');
-var iscool = require('iscool')();
 
-var startsWithAlpha = /^\w/g;
+var startsWithAlpha = /^\w/;
 var hasNonAlpha = /[^\w]|\d/;
 
-process.stdin.pipe(split()).on('data', echoIfGood);
+var lineStream = split();
+lineStream.on('data', echoIfGood);
+process.stdin.pipe(lineStream);
 
 function echoIfGood(s) {
   if (!startsWithAlpha.test(s)) {
@@ -19,8 +20,5 @@ function echoIfGood(s) {
   }
 
   const normalized = word.toLowerCase();
-
-  if (iscool(normalized)) {
-    process.stdout.write(normalized + '\n');
-  }
+  process.stdout.write(normalized + '\n');
 }
