@@ -2,19 +2,13 @@ var vowels = ['a', 'e', 'i', 'o', 'u'];
 var preEConsonants = ['z', 't', 'v', 's', 'c', 'k', 'r'];
 
 var formattersForSuffixes = {
-  ing: [
-    (w, r) => `They call it "${w}", but you never see anyone ${r}!`,
-    (w, r) =>
-      `I keep hearing about "${w}", but I have no idea how it works. Someone, teach me how to ${formatRoot(
-        r
-      )}!`
-  ],
+  ing: [(w, r) => `They call it "${w}", but you never see anyone ${r}!`],
   er: [(w, r) => `They call it a "${w}", but I've never seen one ${r}.`],
   ers: [(w, r) => `They call 'em "${w}", but I've never see 'em ${r}.`],
   ist: [
     (w, r) => `Did you see that ${w}? It really knows how to play a ${r}!`,
-    (w, r) => `Ever talk to a ${w}? They're always thinking in terms of ${r}!`
-  ]
+    (w, r) => `Ever talk to a ${w}? They're always thinking in terms of ${r}!`,
+  ],
 };
 
 function makeObservation({ probable, wordEntry }) {
